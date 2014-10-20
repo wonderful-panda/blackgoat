@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>最近のメッセージ</h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+      {% for text in ['送信日', 'タイトル', '送信者', '宛先'] %}
+        <th>{{ text }}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for msg in messages %}
+      <tr>
+        <td>{{ msg.date }}</td>
+        <td><a href="{{ url_for('message', id = msg.id) }}">
+                    {{ msg.title }}
+            </a>
+        </td>
+        <td>{{ msg.from_addr }}</td>
+        <td>{{ msg.to_addr }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

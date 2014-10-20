@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Blackgoat - {{ msg.title }}</title>
+{% endblock %}
+
+{% block content %}
+<h2>{{ msg.title }}</h2>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <td>送信日</td>
+      <td>{{ msg.date }}</td>
+    </tr>
+    <tr>
+      <td>送信者</td>
+      <td>{{ msg.from_addr }}</td>
+    </tr>
+    <tr>
+      <td>宛先</td>
+      <td>{{ msg.to_addr }}</td>
+    </tr>
+    <tr>
+      <td>Message-Id</td>
+      <td>{{ msg.msg_id }}</td>
+    </tr>
+  </tbody>
+</table>
+<pre>{{ msg.body }}</pre>
+{% endblock %}
+
