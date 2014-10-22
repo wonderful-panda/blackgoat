@@ -3,3 +3,5 @@ migrations
 __pycache__
 *.pyc
 *.db
+build
+dist
