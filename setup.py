@@ -36,6 +36,7 @@ setup(
     cmdclass = {'py2exe': ResourceCollector},
     packages = ['blackgoat'],
     package_data = package_data,
+    data_files = [('', ['config.yaml']), ('log', [])],
     requires = ['jinja2', 'sqlalchemy', 'flask', 'flask_script', 'flask_sqlalchemy'],
     console = ['blackgoat.py'],
     options = {'py2exe' : py2exe_option},

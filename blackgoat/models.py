@@ -39,12 +39,14 @@ def _get_body(msg):
 class Message(db.Model):
     "メール"
     id = sa.Column(sa.Integer, primary_key=True)
-    msg_id = sa.Column(sa.Text)
     title = sa.Column(sa.Text)
     from_addr = sa.Column(sa.Text)
     to_addr = sa.Column(sa.Text)
+    cc_addr = sa.Column(sa.Text)
+    bcc_addr = sa.Column(sa.Text)
     body = sa.Column(sa.Text)
     date = sa.Column(sa.DateTime)
+    raw = sa.Column(sa.Text)
 
     def __repr__(self):
         return "<Message id={0!r}, title={1!r}>".format(self.id, self.title)
@@ -52,13 +54,15 @@ class Message(db.Model):
     @classmethod
     def from_string(cls, data):
         msg = message_from_string(data)
-        msg_id = _get_header('Message-ID', msg)
         from_addr = _get_header('From', msg)
         to_addr = _get_header('To', msg)
+        cc_addr = _get_header('Cc', msg)
+        bcc_addr = _get_header('Bcc', msg)
         title = _get_header('Subject', msg)
         body = _get_body(msg)
         date = _get_date(msg)
-        return cls(msg_id=msg_id, title=title, from_addr=from_addr,
-                   to_addr=to_addr, body=body, date=date)
-
+        raw = data
+        return cls(title=title, from_addr=from_addr,
+                   to_addr=to_addr, cc_addr=cc_addr, bcc_addr=bcc_addr,
+                   body=body, date=date, raw=data)
 

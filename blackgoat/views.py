@@ -12,3 +12,9 @@ def index():
 def message(id):
     msg = Message.query.get(id)
     return flask.render_template('message.html', msg=msg)
+
+@app.route('/raw/<id>')
+def raw(id):
+    msg = Message.query.get(id)
+    return flask.Response(msg.raw, mimetype='text/plain')
+

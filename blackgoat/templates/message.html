@@ -20,11 +20,16 @@
       <td>{{ msg.to_addr }}</td>
     </tr>
     <tr>
-      <td>Message-Id</td>
-      <td>{{ msg.msg_id }}</td>
+      <td>CC</td>
+      <td>{{ msg.cc_addr }}</td>
+    </tr>
+    <tr>
+      <td>BCC</td>
+      <td>{{ msg.bcc_addr }}</td>
     </tr>
   </tbody>
 </table>
+<a href="{{ url_for('raw', id=msg.id) }}">view raw</a>
 <pre>{{ msg.body }}</pre>
 {% endblock %}
 

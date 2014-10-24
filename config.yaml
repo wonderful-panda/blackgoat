@@ -1,0 +1,41 @@
+flask:
+    # SQLALCHEMY_DATABASE_URI: sqlite:///path/to/blackgoat.db
+
+logging:
+    version: 1
+
+    formatters:
+        minimal:
+            format: '[%(levelname)s] %(message)s'
+            datefmt: 'Y/%m/%d %H:%M:%S'
+        simple:
+            format: '%(asctime)s\t%(levelname)s\t%(name)s\t%(message)s'
+            datefmt: 'Y/%m/%d %H:%M:%S'
+
+    handlers:
+        console:
+            class: logging.StreamHandler
+            level: INFO
+            formatter: minimal
+            stream: ext://sys.stdout
+        info:
+            class: logging.handlers.RotatingFileHandler
+            level: INFO
+            formatter: simple
+            filename: log/info.log
+            maxBytes: 10000
+            backupCount: 5
+        error:
+            class: logging.handlers.RotatingFileHandler
+            level: ERROR
+            formatter: simple
+            filename: log/error.log
+            maxBytes: 10000
+            backupCount: 5
+
+    root:
+        level: DEBUG
+        handlers: [console, info, error]
+
+    disable_existing_loggers: False
+

@@ -13,12 +13,13 @@
     {% for msg in messages %}
       <tr>
         <td>{{ msg.date }}</td>
-        <td><a href="{{ url_for('message', id = msg.id) }}">
-                    {{ msg.title }}
-            </a>
-        </td>
+        <td>{{ msg.title }}</td>
         <td>{{ msg.from_addr }}</td>
         <td>{{ msg.to_addr }}</td>
+        <td>
+            <a href="{{ url_for('message', id=msg.id) }}">Show</a>
+            <a href="{{ url_for('raw', id=msg.id) }}">Raw</a>
+        </td>
       </tr>
     {% endfor %}
     </tbody>
