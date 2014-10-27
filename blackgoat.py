@@ -1,10 +1,9 @@
 # coding: utf-8
 from flask.ext.script import Manager, Server, Option
-from blackgoat import app, db, setup_app
+from blackgoat import setup
 import os
 import sys
 import logging
-import urllib
 import logging.config
 import yaml
 
@@ -32,13 +31,15 @@ class MyServer(Server):
         smtp.stop()
 
 if __name__ == '__main__':
-    script = sys.executable if hasattr(sys, 'frozen') else __file__
-    basedir = os.path.dirname(os.path.abspath(script))
+    if hasattr(sys, 'frozen'):
+        script = sys.executable
+        basedir = os.path.dirname(os.path.abspath(sys.executable))
+        template_dir = os.path.join(basedir, 'templates')
+        static_dir = os.path.join(basedir, 'static')
+    else:
+        basedir = os.path.dirname(os.path.abspath(__file__))
+        template_dir = static_dir = None
     os.chdir(basedir)
-
-    database_uri = 'sqlite:' + \
-                   urllib.pathname2url(os.path.join(basedir, 'blackgoat.db'))
-    setup_app(database_uri)
     
     configfile = os.path.join(basedir, 'config.yaml')
     if os.path.exists(configfile):
@@ -46,9 +47,10 @@ if __name__ == '__main__':
 
         logging.config.dictConfig(config['logging'])
         appconfig = config.get('flask')
-        if appconfig:
-            app.config.update(appconfig)
+    else:
+        appconfig = None
 
+    app, db = setup(basedir, appconfig, template_dir, static_dir)
     db.create_all()
 
     manager = Manager(app)
