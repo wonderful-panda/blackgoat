@@ -24,21 +24,22 @@ data_files = \
         gather_data_files('templates', 'blackgoat/templates', '*.html') + \
         gather_data_files('static', 'blackgoat/static', '*/**/*.*') 
 
-py2exe_option = \
-    dict(
-            packages = ['jinja2', 'flask_script', 'flask_sqlalchemy'],
-            excludes = ['tcl', 'Tkconstants', 'Tkinter'],
-            compressed = 1,
-            optimize = 2,
-            bundle_files = 1,
-        )
+requires = ['jinja2', 'sqlalchemy', 'flask_script', 'flask_sqlalchemy']
 
 setup(
     name = 'blackgoat',
-    #cmdclass = {'py2exe': ResourceCollector},
     packages = ['blackgoat'],
     data_files = data_files,
-    requires = ['jinja2', 'sqlalchemy', 'flask', 'flask_script', 'flask_sqlalchemy'],
+    requires = requires,
     console = ['blackgoat.py'],
-    options = {'py2exe' : py2exe_option},
+    options = {
+        'py2exe' : {
+            'packages' : requires,
+            'excludes' : ['tcl', 'Tkconstants', 'Tkinter', 'flask.testsuite'],
+            'compressed' : 1,
+            'optimize' : 2,
+            'bundle_files' : 1,
+        }
+    },
 )
+
