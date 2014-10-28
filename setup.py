@@ -1,6 +1,7 @@
 # coding: utf-8
 from distutils.core import setup
-__import__('py2exe') # to avoid pep8 warning 'Imported but unused'
+import py2exe
+assert py2exe # avoid pep8 warning 'Imported but unused'
 
 import os
 from glob import glob

@@ -16,8 +16,9 @@ def setup(basedir, config=None, template_folder=None, static_folder=None):
     if config:
         app.config.update(config)
     db = SQLAlchemy(app)
+
     import blackgoat.views
-    assert blackgoat.views # to avoid pep8 warning 'Imported but unused'
+    assert blackgoat.views  # avoid pep8 warning 'Imported but unused'
 
     return app, db
 
